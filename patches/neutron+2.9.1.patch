@@ -1,0 +1,146 @@
+diff --git a/node_modules/neutron/bin/build.js b/node_modules/neutron/bin/build.js
+index 4729a4c..00f94c6 100755
+--- a/node_modules/neutron/bin/build.js
++++ b/node_modules/neutron/bin/build.js
+@@ -21,6 +21,7 @@ const createInstaller = require('../lib/build/installer')
+ const createRelease = require('../lib/build/release')
+ const lifecycle = require('../lib/build/lifecycle')
+ const codeSign = require('../lib/build/code-sign')
++const outPath = require('../lib/paths/out-path')
+ 
+ // Parse the supplied commands and options
+ const { _: sub, ...args } = parse({
+@@ -50,7 +51,7 @@ module.exports = async () => {
+     args['--production'] = true
+   }
+ 
+-  const output = resolve(cwd, args['--output'] || 'out')
++  const output = resolve(cwd, args['--output'] || outPath)
+   const config = await getConfig(cwd)
+ 
+   // Build and export the renderer code
+diff --git a/node_modules/neutron/lib/build/bundle.js b/node_modules/neutron/lib/build/bundle.js
+index de152b1..529997b 100644
+--- a/node_modules/neutron/lib/build/bundle.js
++++ b/node_modules/neutron/lib/build/bundle.js
+@@ -11,6 +11,7 @@ const { pathExists: exists, ...fs } = require('fs-extra')
+ // Utilities
+ const os = require('../os')
+ const spinner = require('../spinner')
++const buildPath = require('../paths/build-path')
+ 
+ const pack = (dest, files) => new Promise(async resolve => {
+   const stats = {}
+@@ -76,9 +77,12 @@ const getDependencies = async cwd => {
+ module.exports = async (workingDir, outputDir, config) => {
+   spinner.create(`Bundling application for ${os}`)
+ 
++  const root = buildPath ? `${buildPath}` : "out";
++  const outDir = buildPath ? `${sep}out` : "";
++
+   const include = [
+     'main',
+-    `renderer${sep}out`,
++    `${root}${outDir}`,
+     'package.json',
+     ...await getDependencies(workingDir)
+   ]
+@@ -97,7 +101,7 @@ module.exports = async (workingDir, outputDir, config) => {
+     // contents will be included – only their actual representation
+     // in the file system.
+     const files = [
+-      'renderer',
++      root,
+       'node_modules',
+       ...await globby(include, { nodir: false })
+     ]
+diff --git a/node_modules/neutron/lib/build/export.js b/node_modules/neutron/lib/build/export.js
+index 1416b37..cb004e0 100644
+--- a/node_modules/neutron/lib/build/export.js
++++ b/node_modules/neutron/lib/build/export.js
+@@ -5,12 +5,13 @@ const { promisify } = require('util')
+ 
+ // Utilities
+ const spinner = require('../spinner')
++const buildPath = require('../paths/build-path')
+ 
+ module.exports = async () => {
+   spinner.create('Building renderer code')
+ 
+   const cwd = process.cwd()
+-  const renderer = join(cwd, 'renderer')
++  const renderer = join(cwd, buildPath)
+   const exec = promisify(defaultExec)
+ 
+   let stderr
+diff --git a/node_modules/neutron/lib/dev/renderer.js b/node_modules/neutron/lib/dev/renderer.js
+index 0591ec5..ea8532a 100644
+--- a/node_modules/neutron/lib/dev/renderer.js
++++ b/node_modules/neutron/lib/dev/renderer.js
+@@ -2,6 +2,9 @@
+ const { createServer } = require('http')
+ const { join } = require('path')
+ 
++// Utilities
++const buildPath = require('../paths/build-path')
++
+ module.exports = async () => {
+   const cwd = process.cwd()
+   let next
+@@ -22,7 +25,7 @@ module.exports = async () => {
+     spinner.fail(`Not able to load the ${'`next`'} dependency`)
+   }
+ 
+-  const dir = join(cwd, 'renderer')
++  const dir = join(cwd, buildPath)
+   const instance = next({ dev: true, dir })
+   const requestHandler = instance.getRequestHandler()
+ 
+diff --git a/node_modules/neutron/lib/index.js b/node_modules/neutron/lib/index.js
+index 5b39105..b1c7ef6 100644
+--- a/node_modules/neutron/lib/index.js
++++ b/node_modules/neutron/lib/index.js
+@@ -7,6 +7,9 @@ const isDev = require('electron-is-dev')
+ const { resolve } = require('app-root-path')
+ const { protocol } = require('electron')
+ 
++// Utilities
++const buildPath = require('../lib/paths/build-path')
++
+ const adjustProtocol = directory => {
+   const paths = ['_next', 'static']
+   const isWindows = process.platform === 'win32'
+@@ -39,8 +42,9 @@ const adjustProtocol = directory => {
+ let protocolSet = false
+ 
+ exports.setWindowURL = (instance, page) => {
++  console.log('hehe')
+   const devPath = `http://localhost:5000/${page}`
+-  const renderer = resolve('renderer')
++  const renderer = resolve(buildPath)
+ 
+   if (isDev) {
+     instance.loadURL(devPath)
+@@ -48,7 +52,7 @@ exports.setWindowURL = (instance, page) => {
+   }
+ 
+   const prodPath = format({
+-    pathname: join(renderer, `out/${page}/index.html`),
++    pathname: join(renderer, `out/index.html`),
+     protocol: 'file:',
+     slashes: true
+   })
+diff --git a/node_modules/neutron/lib/paths/build-path.js b/node_modules/neutron/lib/paths/build-path.js
+new file mode 100644
+index 0000000..38b08af
+--- /dev/null
++++ b/node_modules/neutron/lib/paths/build-path.js
+@@ -0,0 +1 @@
++module.exports = "";
+diff --git a/node_modules/neutron/lib/paths/out-path.js b/node_modules/neutron/lib/paths/out-path.js
+new file mode 100644
+index 0000000..8fda739
+--- /dev/null
++++ b/node_modules/neutron/lib/paths/out-path.js
+@@ -0,0 +1 @@
++module.exports = "apps";

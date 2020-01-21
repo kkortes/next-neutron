@@ -1,0 +1,24 @@
+{
+  "name": "next-neutron",
+  "version": "1.0.0",
+  "main": "./main/index.js",
+  "private": true,
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "export": "next export",
+    "electron-dev": "neutron",
+    "electron-build": "neutron build",
+    "postinstall": "patch-package"
+  },
+  "dependencies": {
+    "neutron": "latest"
+  },
+  "devDependencies": {
+    "electron": "^7.1.9",
+    "next": "^9.2.0",
+    "patch-package": "^6.2.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  }
+}
