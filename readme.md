@@ -13,7 +13,7 @@ Node v10.16.3
 Npm v6.9.0
 ```
 
-This is a new Electron app created with [Neutron](https://www.npmjs.com/package/neutron).
+This is a new Electron app created with [Neutron](https://www.npmjs.com/package/neutron) by the awesome guys over at [Zeit](https://zeit.co).
 
 Neutron github repo seems to be private, so couldn't fork it. Link leads to npmjs.
 
