@@ -31,13 +31,13 @@ The regular version of neutron expects nextjs-code to be located in /renderer. I
 
 `npm install`
 
-`npm run dev` (next: to develop as usual using the browser)
+`npm run dev` runs `next` (develop as usual using the browser)
 
-`npm run build` (to build .next)
+`npm run build` runs `next build` (.next)
 
-`npm run electron-dev` (to develop in-electron window)
+`npm run electron-dev` runs `neutron` (develop in-electron)
 
-`npm run electron-build` (to build  .exe/.app into /apps)
+`npm run electron-build` runs `neutron build` (.exe/.app into /apps)
 
 ## Published to Zeit Now
 
