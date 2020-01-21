@@ -15,11 +15,11 @@ Npm v6.9.0
 
 This is a new Electron app created with [Neutron](https://www.npmjs.com/package/neutron).
 
-Github repo seems to be private, so could't fork it. Link leads to npmjs.
+Neutron github repo seems to be private, so couldn't fork it. Link leads to npmjs.
 
 ## Monkey-patch for node_modules/neutron with patch-package
 
-Since I couldn't fork neutron on github, this repo includes a monkey-patch.
+Since I couldn't fork neutron on github, this repo includes a monkey-patch for neutron to support Next 9.X.X.
 
 ## Builds from root
 
