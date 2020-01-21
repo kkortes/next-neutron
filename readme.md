@@ -27,6 +27,16 @@ The regular version of neutron expects nextjs-code to be located in /renderer. I
 - Build the project regularly with `next build` & `next export` and publish to Now
 - Build the project for Mac / Windows using Electron with `neutron build`
 
+## How to get going
+
+`npm install`
+
+`npm run dev` (next: to develop as usual using the browser)
+`npm run build` (to build .next)
+
+`npm run electron-dev` (to develop in-electron window)
+`npm run electron-build` (to build  .exe/.app into /apps)
+
 ## Published to Zeit Now
 
 [next-neutron.now.sh](https://next-neutron.now.sh)
