@@ -1,6 +1,6 @@
 # next-neutron
 
-Working next + neutron + electron combo with (as of today) latest versions:
+Working next + neutron + electron combo with (as of January 2020) latest versions:
 ```
 "electron": "^7.1.9",
 "next": "^9.2.0",
