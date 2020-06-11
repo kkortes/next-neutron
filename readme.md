@@ -24,7 +24,7 @@ Since I couldn't fork neutron on github, this repo includes a monkey-patch for n
 ## Builds from root
 
 The regular version of neutron expects nextjs-code to be located in /renderer. In this repo neutron grabs out dir from root. This means you can:
-- Build the project regularly with `next build` & `next export` and publish to Now
+- Build the project regularly with `next build` & `next export` and publish to Vercel
 - Build the project for Mac / Windows using Electron with `neutron build`
 
 ## How to get going
