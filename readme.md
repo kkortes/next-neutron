@@ -13,7 +13,7 @@ Node v10.16.3
 Npm v6.9.0
 ```
 
-This is a new Electron app created with [Neutron](https://www.npmjs.com/package/neutron) by the awesome guys over at [Zeit](https://zeit.co).
+This is a new Electron app created with [Neutron](https://www.npmjs.com/package/neutron) by the awesome guys over at [Vercel](https://vercel.com).
 
 Neutron github repo seems to be private, so couldn't fork it. Link leads to npmjs.
 
@@ -39,6 +39,6 @@ The regular version of neutron expects nextjs-code to be located in /renderer. I
 
 `npm run electron-build` runs `neutron build` (.exe/.app into /apps)
 
-## Published to Zeit Now
+## Published to Vercel
 
 [next-neutron.now.sh](https://next-neutron.now.sh)
