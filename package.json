@@ -15,7 +15,7 @@
     "neutron": "2.9.1"
   },
   "devDependencies": {
-    "electron": "^7.1.9",
+    "electron": "^11.5.0",
     "next": "^9.2.0",
     "patch-package": "^6.2.0",
     "react": "^16.12.0",
